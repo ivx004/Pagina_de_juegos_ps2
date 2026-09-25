@@ -1,0 +1,6 @@
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Create directory if absent
+(BASE_DIR / 'static').mkdir(exist_ok=True)

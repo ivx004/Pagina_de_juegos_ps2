@@ -1,0 +1,30 @@
+{% extends 'juegos/base.html' %}
+
+{% block title %}Acceso{% endblock %}
+
+{% block content %}
+  <div class="login-box">
+    <h1>Iniciar sesión</h1>
+
+    {% if form.errors %}
+      <div class="messages">
+        <li>Usuario o contraseña incorrectos.</li>
+      </div>
+    {% endif %}
+
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-grid">
+        <div class="field">
+          <label for="id_username">Usuario</label>
+          {{ form.username }}
+        </div>
+        <div class="field">
+          <label for="id_password">Contraseña</label>
+          {{ form.password }}
+        </div>
+        <button type="submit" class="btn btn-primary" style="width:100%;">Entrar</button>
+      </div>
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'juegos/base.html' %}
+
+{% block title %}Biblioteca PS2{% endblock %}
+
+{% block content %}
+  <div class="hero">
+    <h1><span class="bolt">⚡</span> Actividad: proyecto CRUD seguro</h1>
+    <p><strong>Entrega el proyecto</strong> Aplicación web con Django Admin y CRUD aplicando todo lo visto.</p>
+  </div>
+
+  <ul class="list">
+    <li><span class="step">1</span> Modelo + Admin registra tu modelo en Django Admin</li>
+    <li><span class="step">2</span> CRUD con vistas genéricas List, Detail, Create, Update, Delete</li>
+    <li><span class="step">3</span> ModelForm en las vistas de creación y edición</li>
+    <li><span class="step">4</span> Seguridad protege Create/Update/Delete con login y agrega {% verbatim %}{% csrf_token %}{% endverbatim %}</li>
+  </ul>
+
+  <div class="btn-row">
+    <a href="{% url 'logout' %}" class="btn btn-secondary">Cerrar sesión</a>
+    <a href="{% url 'game_create' %}" class="btn btn-primary">Nuevo juego</a>
+  </div>
+
+  <div class="card">
+    <div class="status">
+      <h2>Juegos PS2</h2>
+      <strong>Usuario activo: {{ request.user.username }}</strong>
+    </div>
+
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Título</th>
+          <th>Género</th>
+          <th>Año</th>
+          <th>Desarrollador</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for game in games %}
+          <tr>
+            <td><a href="{% url 'game_detail' game.pk %}">{{ game.title }}</a></td>
+            <td>{{ game.genre }}</td>
+            <td>{{ game.release_year }}</td>
+            <td>{{ game.developer }}</td>
+            <td>
+              <a href="{% url 'game_update' game.pk %}">Editar</a> |
+              <a href="{% url 'game_delete' game.pk %}">Eliminar</a>
+            </td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="5">No hay juegos registrados todavía.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}
